@@ -1,0 +1,14 @@
+"0","```r
+
+# Calculate the density of the mu_chain and sd_chain values
+density_df <- clean_chain(output, thinning = 50, burnin = 200) %>% 
+  select(param, value) %>% 
+  group_by(param) %>% 
+  nest() %>% 
+  mutate(density = map(data, ~density(.$value))) %>% 
+  select(-data) %>% 
+  mutate(density = map(density, broom::tidy)) %>% 
+  unnest(density)
+
+
+```"

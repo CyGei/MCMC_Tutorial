@@ -1,0 +1,7 @@
+"0",""
+"0","as_tibble(data) %>% "
+"0","  ggplot(aes(x = data)) +"
+"0","  geom_density(fill = ""steelblue"")+"
+"0","  labs(x = ""x"", y = ""density"","
+"0","       title = ""data - density plot"")"
+"0",""

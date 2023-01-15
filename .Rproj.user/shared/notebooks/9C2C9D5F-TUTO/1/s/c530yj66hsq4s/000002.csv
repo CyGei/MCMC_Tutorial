@@ -1,0 +1,47 @@
+"0","//https://teuder.github.io/rcpp4everyone_en/220_dpqr_functions.html
+
+#include <Rcpp.h>
+
+using namespace Rcpp;
+
+//LIKELIHOOD
+
+// [[Rcpp::export]]
+double log_likelihood(NumericVector dat, double mu, double sd) 
+{
+  if(mu<=0){
+    return (R_NegInf);
+  } else{
+    return sum(Rcpp::dgamma(dat, std::pow(mu/sd, 2), std::pow(sd, 2) / mu, true ));
+  }
+}
+
+
+//PRIOR
+
+double log_prior_mu(double mu, double prior_mu, double prior_sd) 
+{
+  if(mu<0){
+    return (R_NegInf);
+  } // The function returns a probability of 0 if the mean is negative
+  else{
+    return R::dnorm(mu, prior_mu, prior_sd, TRUE); 
+  }
+}
+
+
+double log_prior_sd(double sd){
+  return R::dexp(sd, 1.0/1000.0, TRUE);
+}
+
+double log_prior_total(double mu, double sd, double prior_mu, double prior_sd)
+{
+  return (log_prior_mu(mu, prior_mu, prior_sd) + log_prior_sd(sd));
+}
+
+// POSTERIOR
+// [[Rcpp::export]]
+double log_posterior(Rcpp::NumericVector dat, double mu, double sd, double prior_mu, double prior_sd)
+{
+  return( log_likelihood(dat, mu, sd) + log_prior_total(mu, sd, prior_mu, prior_sd) );
+}"

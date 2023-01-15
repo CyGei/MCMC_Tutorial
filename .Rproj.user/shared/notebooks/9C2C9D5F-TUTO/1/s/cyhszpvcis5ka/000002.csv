@@ -1,0 +1,6 @@
+"0","```r
+log_posterior <- function(dat, mu, sd, prior_mu, prior_sd)
+{
+  return( log_likelihood(dat, mu, sd) + log_prior_total(mu, sd, prior_mu, prior_sd) ) 
+}
+```"

@@ -1,0 +1,82 @@
+"0","#include <Rcpp.h>
+#include \"cpp_model.h\"
+#include \"move.h\"
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+Rcpp::DataFrame mcmc(int n_iter, 
+                     double init_mu, 
+                     double init_sd, 
+                     double sd_proposal_mu,
+                     double sd_proposal_sd,
+                     Rcpp::NumericVector data, 
+                     double prior_mu, 
+                     double prior_sd )
+{
+  
+  // Vectors to store the chain of explored parameters & initialize the first elements of the chains with the provided initial values
+  NumericVector mu_chain(n_iter);
+  mu_chain[0] = init_mu;
+  NumericVector sd_chain(n_iter);
+  sd_chain[0] = init_sd;
+  
+  // Log-likelihoods
+  NumericVector loglike_chain(n_iter);
+  loglike_chain[0] = log_likelihood(data, mu_chain[0], sd_chain[0]);
+  
+  //Log-posterior
+  NumericVector logpost_chain(n_iter);
+  logpost_chain[0] = log_posterior(data, mu_chain[0],sd_chain[0],prior_mu, prior_sd);
+  
+  //Log-prior
+  NumericVector logprior_chain(n_iter);
+  logprior_chain[0] = log_prior_total(mu_chain[0], sd_chain[0], prior_mu, prior_sd);
+  
+  
+  // Vectors to store the acceptance rate for the mu and sd parameters
+  NumericVector accept_mu(n_iter);
+  NumericVector accept_sd(n_iter);
+  
+  for(int k = 0; k < n_iter-1; k++)
+  {
+    Rcpp::Rcout << \"iteration: \" << k << std::endl;
+    //mu
+    Rcpp::List tmp = move_param(\"mu\",
+                                mu_chain[k],
+                                        sd_chain[k],
+                                                sd_proposal_mu,
+                                                data, 
+                                                prior_mu, 
+                                                prior_sd);
+    mu_chain[k+1] = tmp[\"updated_param\"];
+    accept_mu[k+1] = tmp[\"accept\"];
+    
+    //sd
+    tmp = move_param(\"sd\",
+                     sd_chain[k],
+                             mu_chain[k+1],
+                                     sd_proposal_sd,
+                                     data, 
+                                     prior_mu, 
+                                     prior_sd);
+    
+    sd_chain[k+1] = tmp[\"updated_param\"];
+    accept_sd[k+1] = tmp[\"accept\"];
+    
+    // update log-prior/likelihood/posterior
+    logprior_chain[k+1] = log_prior_total(mu_chain[k+1], sd_chain[k+1], prior_mu, prior_sd);
+    loglike_chain[k+1] = log_likelihood(data, mu_chain[k+1], sd_chain[k+1]);
+    logpost_chain[k+1] = log_posterior(data, mu_chain[k+1], sd_chain[k+1], prior_mu, prior_sd);
+
+  }
+  // Create the output data frame
+  DataFrame out = DataFrame::create(Named(\"iter\") =  seq(1,n_iter),
+                                    Named(\"mu_chain\") = mu_chain,
+                                    Named(\"sd_chain\") = sd_chain,
+                                    Named(\"accept_mu\") = accept_mu,
+                                    Named(\"accept_sd\") = accept_sd,
+                                    Named(\"logprior_chain\") = logprior_chain,
+                                    Named(\"loglike_chain\") = loglike_chain,
+                                    Named(\"logpost_chain\") = logpost_chain);
+  return out;
+}"

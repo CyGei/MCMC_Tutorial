@@ -1,0 +1,9 @@
+"0","cpp_files <- list.files(path = \"cpp_files\", pattern = \"(\\.cpp$)|(\\.h$)\", full.names = TRUE) 
+
+Rcpp.package.skeleton(name = \"mcmcTuto\",
+                      example_code = FALSE,
+                      cpp_files = cpp_files)
+
+#set your working dir to the package folder
+devtools::build()
+devtools::install()"

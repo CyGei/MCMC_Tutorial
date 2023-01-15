@@ -1,0 +1,7 @@
+"0",""
+"0","density_df %>% "
+"0","  ggplot(aes(x,y, fill = param)) +"
+"0","  geom_area(alpha = 0.5) +"
+"0","  facet_wrap(~ param, scales = ""free"" )+"
+"0","  scale_fill_fira()+"
+"0","  theme(legend.position = ""none"")"

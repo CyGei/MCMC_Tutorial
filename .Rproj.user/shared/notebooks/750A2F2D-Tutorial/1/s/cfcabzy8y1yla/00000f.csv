@@ -1,0 +1,4 @@
+"0","log_prior_total <- function(mu, sd, prior_mu, prior_sd)"
+"0","{"
+"0","  return(log_prior_mu(mu, prior_mu, prior_sd) + log_prior_sd(sd))"
+"0","}"

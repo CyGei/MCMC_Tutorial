@@ -1,0 +1,1 @@
+"0","trace_plot(clean_chain(output, 50, 200)) # sampling every 50 iterations, removing the first 200 iterations"

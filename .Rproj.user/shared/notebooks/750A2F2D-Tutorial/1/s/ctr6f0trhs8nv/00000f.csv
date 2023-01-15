@@ -1,0 +1,2 @@
+"0","data <- rgamma(1000, shape=(true_mu/true_sd)^2, scale = true_sd^2/true_mu)"
+"0",""

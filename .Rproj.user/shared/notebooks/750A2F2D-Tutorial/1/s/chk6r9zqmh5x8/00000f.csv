@@ -1,0 +1,8 @@
+"0","clean_chain(output, thinning = 50, burnin = 200) %>% "
+"0","   group_by(param) %>% "
+"0","   summarise(mean = mean(value),"
+"0","             lower95 = quantile(value, probs = 0.025),"
+"0","             upper95 = quantile(value, probs = 0.975)) %>% "
+"0","   ungroup() %>% "
+"0","   mutate_if(is.numeric, round, 3) %>% "
+"0","   mutate(truth = c(true_mu, true_sd))"

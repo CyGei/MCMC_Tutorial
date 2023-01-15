@@ -1,0 +1,9 @@
+"0","#set your working dir to the package folder
+devtools::build()
+"
+"2","Registered S3 method overwritten by 'htmlwidgets':
+  method           from         
+  print.htmlwidget tools:rstudio
+"
+"2","Error: No root directory found in C:/Users/cygei/Documents/PROJECTS/MCMC_Tutorial or its parent directories. Root criterion: contains a file ""DESCRIPTION""
+"

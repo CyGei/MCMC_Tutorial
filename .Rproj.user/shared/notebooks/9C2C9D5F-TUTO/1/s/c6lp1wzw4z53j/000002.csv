@@ -1,0 +1,12 @@
+"0","```r
+
+log_likelihood <- function(dat, mu, sd)
+{
+  if (mu <= 0) {
+    return(-Inf)
+  }
+  return( sum(  dgamma(dat, shape=(mu/sd)^2, scale = sd^2/mu, log = TRUE) ) )
+  
+}
+
+```"

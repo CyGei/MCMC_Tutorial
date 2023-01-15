@@ -1,0 +1,4 @@
+"0","```r
+rm(list = ls(pattern = \"^log\"))
+library(Rcpp)
+```"

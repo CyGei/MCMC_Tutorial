@@ -1,0 +1,5 @@
+"0","```r
+trace_plot(clean_chain(output)) #no thinning, no burnin 
+trace_plot(clean_chain(output, 50, 0)) # sampling every 50 iterations, no burnin
+trace_plot(clean_chain(output, 50, 200)) # sampling every 50 iterations, removing the first 200 iterations
+```"

@@ -1,0 +1,5 @@
+"0",""
+"0","log_prior_sd <- function(sd)"
+"0","{"
+"0","	return( dexp(sd, rate=1/1000 , log=TRUE) )"
+"0","}"

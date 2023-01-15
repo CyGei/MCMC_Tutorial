@@ -1,0 +1,4 @@
+"0",""
+"0","acf_2_df(chain = clean_chain(output),"
+"0","         params = c(""mu_chain"", ""sd_chain"")) %>% "
+"0","  acf_plot(.)"

@@ -1,0 +1,8 @@
+"0","log_prior_mu <- function(mu, prior_mu, prior_sd) {"
+"0","  if(mu<0){"
+"0","    return (-Inf)"
+"0","  } "
+"0","  else{"
+"0","    return( dnorm(mu, mean = prior_mu, sd = prior_sd, log=TRUE) )"
+"0","  }"
+"0","}"
